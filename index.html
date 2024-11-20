@@ -1,126 +1,94 @@
-<html>
- <head>
-  <title>
-   Wedding RSVP
-  </title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supabase Email Submission</title>
   <style>
-   body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .container {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            z-index: 10;
-        }
-        .container h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .container p {
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-        .container input[type="email"] {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .container button {
-            background-color: #ff6f61;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .container button:hover {
-            background-color: #ff4a3d;
-        }
-        .background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            gap: 10px;
-            padding: 10px;
-            z-index: 1;
-        }
-        .background img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            transition: opacity 1s ease-in-out;
-        }
-        @keyframes changeImage {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        .background img:nth-child(1) { animation: changeImage 15s infinite; }
-        .background img:nth-child(2) { animation: changeImage 15s infinite 5s; }
-        .background img:nth-child(3) { animation: changeImage 15s infinite 10s; }
-        .background img:nth-child(4) { animation: changeImage 15s infinite 15s; }
-        .background img:nth-child(5) { animation: changeImage 15s infinite 20s; }
-        .background img:nth-child(6) { animation: changeImage 15s infinite 25s; }
-        .background img:nth-child(7) { animation: changeImage 15s infinite 30s; }
-        .background img:nth-child(8) { animation: changeImage 15s infinite 35s; }
-        .background img:nth-child(9) { animation: changeImage 15s infinite 40s; }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    form {
+      margin-top: 20px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      width: 250px;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .message {
+      margin-top: 20px;
+      color: green;
+    }
+    .error {
+      margin-top: 20px;
+      color: red;
+    }
   </style>
- </head>
- <body>
-  <div class="background">
-   <img alt="Image of the couple smiling at each other" height="200" src="https://storage.googleapis.com/a1aa/image/U4meogGfzOuFY0u3HgYnkT4y8vP07rhcXkznbY4aeiFnCHlnA.jpg" width="200"/>
-   <img alt="Image of the couple holding hands" height="200" src="https://storage.googleapis.com/a1aa/image/qjWwFrOgwfXaWqOkNyzynQujMtz7Hmfob5E9bE307Ue9CHlnA.jpg" width="200"/>
-   <img alt="Image of the couple at a scenic location" height="200" src="https://storage.googleapis.com/a1aa/image/qki0Eh4QZuKgBZp5Roo8b50e9LboCTnTSda8zvKzyNAuwR5JA.jpg" width="200"/>
-   <img alt="Image of the couple laughing together" height="200" src="https://storage.googleapis.com/a1aa/image/c1rcc3Ygv96PMtfMOgf8BmEcI8XarJS8cbwYrC5Q9bQahjyTA.jpg" width="200"/>
-   <img alt="Image of the couple during a sunset" height="200" src="https://storage.googleapis.com/a1aa/image/pD1cMLFnCppBDxrg2mkEePafxpVgaQCCZf25ceU9Oh3cFOKPB.jpg" width="200"/>
-   <img alt="Image of the couple in formal attire" height="200" src="https://storage.googleapis.com/a1aa/image/RtGXrkAPdpKEOds1H45rEWvUL2m4t96Cs2XQzsKregSwwR5JA.jpg" width="200"/>
-   <img alt="Image of the couple on a beach" height="200" src="https://storage.googleapis.com/a1aa/image/lVc8Wn1STVZ7D51sNY1fPBBWVgMLz5xDam0vIbWx7oBqwR5JA.jpg" width="200"/>
-   <img alt="Image of the couple with their pet" height="200" src="https://storage.googleapis.com/a1aa/image/XJkO1zHrGMpTBpZ0p8NpBHlb3vuDEpvewctF8nKfem0wCHlnA.jpg" width="200"/>
-   <img alt="Image of the couple at a park" height="200" src="https://storage.googleapis.com/a1aa/image/HHgW116mld75IpN9hQhQR0fZtfqtoX8Ch82fv6foA6mYFOKPB.jpg" width="200"/>
-  </div>
-  <div class="container">
-   <h1>
-    Wedding RSVP
-   </h1>
-   <p>
-    Please enter your email to RSVP for our wedding.
-   </p>
-   <form>
-    <input placeholder="Enter your email" required="" type="email"/>
-    <button type="submit">
-     <i class="fas fa-paper-plane">
-     </i>
-     Submit
-    </button>
-   </form>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="index.js" type="module"></script>
- </body>
+</head>
+<body>
+  <h1>Submit Your Email</h1>
+  <form id="emailForm">
+    <input type="email" id="emailInput" placeholder="Enter your email" required />
+    <button type="submit">Submit</button>
+  </form>
+  <div id="statusMessage"></div>
+
+  <script type="module">
+    // Import Supabase
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    // Initialize Supabase client
+    const supabaseUrl = 'https://uknpeqdlfqmxilnmzbnn.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVrbnBlcWRsZnFteGlsbm16Ym5uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIwMjAyMTYsImV4cCI6MjA0NzU5NjIxNn0.Ac3mCSZ6DgadgSHvXkwkDB8H3V8EJzYKZC-TGzlHI60';
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Form submission handler
+    document.getElementById('emailForm').addEventListener('submit', async (event) => {
+      event.preventDefault(); // Prevent form refresh
+      const emailInput = document.getElementById('emailInput');
+      const email = emailInput.value.trim();
+      const statusMessage = document.getElementById('statusMessage');
+
+      // Reset status message
+      statusMessage.textContent = '';
+      statusMessage.className = '';
+
+      if (!email) {
+        statusMessage.textContent = 'Please enter a valid email address.';
+        statusMessage.className = 'error';
+        return;
+      }
+
+      try {
+        // Insert email into Supabase
+        const { error } = await supabase.from('Email').insert([{ Email: email }]);
+        if (error) {
+          console.error('Error inserting email:', error.message);
+          statusMessage.textContent = 'Error submitting email. Please try again.';
+          statusMessage.className = 'error';
+        } else {
+          statusMessage.textContent = 'Email submitted successfully!';
+          statusMessage.className = 'message';
+          emailInput.value = ''; // Clear the input field
+        }
+      } catch (err) {
+        console.error('Unexpected error:', err);
+        statusMessage.textContent = 'Unexpected error. Please try again later.';
+        statusMessage.className = 'error';
+      }
+    });
+  </script>
+</body>
 </html>
