@@ -1,94 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Supabase Email Submission</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-    }
-    form {
-      margin-top: 20px;
-    }
-    input, button {
-      padding: 10px;
-      margin: 5px;
-      width: 250px;
-    }
-    button {
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    .message {
-      margin-top: 20px;
-      color: green;
-    }
-    .error {
-      margin-top: 20px;
-      color: red;
-    }
-  </style>
-</head>
-<body>
-  <h1>Submit Your Email</h1>
-  <form id="emailForm">
-    <input type="email" id="emailInput" placeholder="Enter your email" required />
-    <button type="submit">Submit</button>
-  </form>
-  <div id="statusMessage"></div>
+<html>
+  <head>
+    <title>Wedding Images</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        height: 100vh; /* Full viewport height */
+        overflow: hidden;
+      }
+      .row {
+        width: 100%; /* Full width for the image row */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1; /* Flex to evenly distribute space */
+      }
+      .row img {
+        width: 90%; /* Cap the width at 90% of the container */
+        height: auto; /* Maintain aspect ratio */
+        max-height: 40vh; /* Cap the height at 40% of the viewport */
+        object-fit: cover; /* Crop to fit dimensions */
+        border-radius: 15px; /* Rounded edges */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+      }
+      .buttons {
+        width: 100%; /* Full width for the buttons */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex: 0.3; /* Buttons take up 30% of height */
+        gap: 10px;
+      }
+      .buttons a {
+        background-color: #ff6f61;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        width: 80%;
+        text-align: center;
+      }
+      .buttons a:hover {
+        background-color: #ff4a3d;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row" id="row1">
+      <!-- First image -->
+    </div>
+    <div class="buttons">
+      <a href="https://example-wedding.com" target="_blank">
+        Send Images Here!
+      </a>
+      <a href="https://example-registry.com" target="_blank">
+        Send Letters to the Couple!
+      </a>
+    </div>
+    <div class="row" id="row2">
+      <!-- Second image -->
+    </div>
 
-  <script type="module">
-    // Import Supabase
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+    <script>
+      // List of image paths
+      const images = [
+        'images/1.jpg',
+        'images/2.jpg',
+        'images/3.jpg',
+        'images/4.jpg',
+        'images/5.jpg',
+        'images/6.jpg',
+        'images/7.jpg',
+        'images/8.jpg',
+        'images/9.jpg',
+        'images/10.jpg',
+      ];
 
-    // Initialize Supabase client
-    const supabaseUrl = 'https://uknpeqdlfqmxilnmzbnn.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVrbnBlcWRsZnFteGlsbm16Ym5uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIwMjAyMTYsImV4cCI6MjA0NzU5NjIxNn0.Ac3mCSZ6DgadgSHvXkwkDB8H3V8EJzYKZC-TGzlHI60';
-    const supabase = createClient(supabaseUrl, supabaseKey);
+      // Reference to the rows
+      const row1 = document.getElementById('row1');
+      const row2 = document.getElementById('row2');
 
-    // Form submission handler
-    document.getElementById('emailForm').addEventListener('submit', async (event) => {
-      event.preventDefault(); // Prevent form refresh
-      const emailInput = document.getElementById('emailInput');
-      const email = emailInput.value.trim();
-      const statusMessage = document.getElementById('statusMessage');
-
-      // Reset status message
-      statusMessage.textContent = '';
-      statusMessage.className = '';
-
-      if (!email) {
-        statusMessage.textContent = 'Please enter a valid email address.';
-        statusMessage.className = 'error';
-        return;
+      // Function to create an image element
+      function createImageElement(src) {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = 'Wedding image';
+        return img;
       }
 
-      try {
-        // Insert email into Supabase
-        const { error } = await supabase.from('Email').insert([{ Email: email }]);
-        if (error) {
-          console.error('Error inserting email:', error.message);
-          statusMessage.textContent = 'Error submitting email. Please try again.';
-          statusMessage.className = 'error';
-        } else {
-          statusMessage.textContent = 'Email submitted successfully!';
-          statusMessage.className = 'message';
-          emailInput.value = ''; // Clear the input field
-        }
-      } catch (err) {
-        console.error('Unexpected error:', err);
-        statusMessage.textContent = 'Unexpected error. Please try again later.';
-        statusMessage.className = 'error';
-      }
-    });
-  </script>
-</body>
+      // Initialize rows with unique images
+      let currentIndex = 0;
+      row1.appendChild(createImageElement(images[currentIndex]));
+      currentIndex = (currentIndex + 1) % images.length;
+      row2.appendChild(createImageElement(images[currentIndex]));
+      currentIndex = (currentIndex + 1) % images.length;
+
+      // Cycle images periodically
+      setInterval(() => {
+        const row1Image = row1.querySelector('img');
+        const row2Image = row2.querySelector('img');
+
+        // Update Row 1 image
+        row1Image.src = images[currentIndex];
+        currentIndex = (currentIndex + 1) % images.length;
+
+        // Update Row 2 image
+        row2Image.src = images[currentIndex];
+        currentIndex = (currentIndex + 1) % images.length;
+      }, 5000); // Change images every 5 seconds
+    </script>
+  </body>
 </html>
